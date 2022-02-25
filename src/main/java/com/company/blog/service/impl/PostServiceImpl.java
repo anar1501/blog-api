@@ -20,6 +20,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDto createPost(PostRequestDto requestDto) {
         Post savePost = postRepository.save(appConfiguration.modelMapper().map(requestDto, Post.class));
-         return INSTANCE.toDto(savePost);
+        return INSTANCE.toDto(savePost);
     }
 }
