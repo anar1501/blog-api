@@ -1,0 +1,14 @@
+blog:
+  datasource:
+    username: postgres
+    password: 12345
+    url: jdbc:postgresql://localhost:5432/ecourtprocessing
+    driver: org.postgresql.Driver
+  hibernate:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: true
+      format_sql: true
+      ddl-auto: validate
+
+server:
+  port: 8080
