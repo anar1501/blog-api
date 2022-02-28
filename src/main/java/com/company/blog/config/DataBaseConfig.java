@@ -49,7 +49,7 @@ public class DataBaseConfig {
         return new HikariDataSource(config);
     }
 
-    @Bean(name = "court-em")
+    @Bean(name = "blog-em")
     public LocalContainerEntityManagerFactoryBean entityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSourceSphere());
@@ -65,7 +65,7 @@ public class DataBaseConfig {
         return em;
     }
 
-    @Bean(name = "court-tm")
+    @Bean(name = "blog-tm")
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManager().getObject());

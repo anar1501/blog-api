@@ -9,6 +9,10 @@ import com.company.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.company.blog.mapper.EntityToDto.INSTANCE;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDto createPost(PostRequestDto requestDto) {
         Post savePost = postRepository.save(appConfiguration.modelMapper().map(requestDto, Post.class));
-        return appConfiguration.modelMapper().map(savePost, PostResponseDto.class);
+        return INSTANCE.toDto(savePost);
+    }
+
+    @Override
+    public List<PostResponseDto> findAll() {
+        return postRepository.findAll().stream().map(post -> appConfiguration.modelMapper().map(post, PostResponseDto.class)).collect(Collectors.toList());
     }
 }
