@@ -36,4 +36,11 @@ public class PostServiceImpl implements PostService {
     public PostResponseDto getById(Long id) {
         return appConfiguration.modelMapper().map(postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id)), PostResponseDto.class);
     }
+
+    @Override
+    public PostResponseDto updateById(Long id, PostRequestDto postRequestDto) {
+        Post post = postRepository.getById(id);
+        appConfiguration.modelMapper().map(postRequestDto, post);
+        return appConfiguration.modelMapper().map(postRepository.save(post), PostResponseDto.class);
+    }
 }

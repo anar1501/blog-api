@@ -31,4 +31,9 @@ public class PostController {
     public ResponseEntity<PostResponseDto> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(postService.getById(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponseDto> updateById(@PathVariable("id") Long id, PostRequestDto postRequestDto) {
+        return ResponseEntity.ok(postService.updateById(id, postRequestDto));
+    }
 }
