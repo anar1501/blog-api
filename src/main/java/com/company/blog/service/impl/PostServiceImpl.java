@@ -5,6 +5,7 @@ import com.company.blog.data.dto.request.PostRequestDto;
 import com.company.blog.data.dto.response.PostResponseDto;
 import com.company.blog.data.entity.Post;
 import com.company.blog.data.repository.PostRepository;
+import com.company.blog.exception.ResourceNotFoundException;
 import com.company.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostResponseDto> findAll() {
         return postRepository.findAll().stream().map(post -> appConfiguration.modelMapper().map(post, PostResponseDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PostResponseDto getById(Long id) {
+        return appConfiguration.modelMapper().map(postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id)), PostResponseDto.class);
     }
 }
