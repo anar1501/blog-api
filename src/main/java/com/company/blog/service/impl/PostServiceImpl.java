@@ -17,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
+
 import static com.company.blog.mapper.EntityToDto.INSTANCE;
 
 @Service
@@ -27,10 +29,12 @@ public class PostServiceImpl implements PostService {
     private final PostMapperUtility postMapperUtility;
 
     @Override
-    public PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize,String sortBy) {
-        Pageable pageable = PageRequest.of(pageNumber,pageSize,Sort.by(sortBy));
-        Page<Post> postPage = postRepository.findAll(pageable);
-        return postMapperUtility.preparePaginationInfoPostResponseDto(pageNumber, pageSize, postPage);
+    public PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize, String sortBy, String sortType) {
+        Sort sort = sortType.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<Post> postRepositoryAll = postRepository.findAll(pageable);
+        List<Post> postList = postRepositoryAll.getContent();
+        return postMapperUtility.preparePaginationInfoPostResponseDto(pageNumber,pageSize,postList,postRepositoryAll);
     }
 
     @Override
@@ -38,7 +42,6 @@ public class PostServiceImpl implements PostService {
         Post savePost = postRepository.save(appConfiguration.modelMapper().map(requestDto, Post.class));
         return INSTANCE.toDto(savePost);
     }
-
 
     @Override
     public PostResponseDto getById(Long id) {
