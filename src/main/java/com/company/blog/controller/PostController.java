@@ -27,11 +27,11 @@ public class PostController {
     public ResponseEntity<PaginationInfoPostResponseDto> getAll
             (
                     @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-                    @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
+                    @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+                    @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
 
-            )
-    {
-        return ResponseEntity.ok(postService.getAll(pageNumber, pageSize));
+            ) {
+        return ResponseEntity.ok(postService.getAll(pageNumber, pageSize, sortBy));
     }
 
     @GetMapping("/{id}")
