@@ -8,6 +8,10 @@ import com.company.blog.data.repository.PostRepository;
 import com.company.blog.exception.ResourceNotFoundException;
 import com.company.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +32,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostResponseDto> findAll() {
-        return postRepository.findAll().stream().map(post -> appConfiguration.modelMapper().map(post, PostResponseDto.class)).collect(Collectors.toList());
+    public List<PostResponseDto> findAll(int pageNumber, int pageSize) {
+        return postRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent().stream().map(post -> appConfiguration.modelMapper().map(post, PostResponseDto.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -46,6 +50,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deleteById(Long id) {
-       postRepository.delete(postRepository.getById(id));
+        postRepository.delete(postRepository.getById(id));
     }
 }

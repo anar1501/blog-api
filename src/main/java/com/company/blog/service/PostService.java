@@ -8,7 +8,7 @@ import java.util.List;
 public interface PostService {
     PostResponseDto createPost(PostRequestDto requestDto);
 
-    List<PostResponseDto> findAll();
+    List<PostResponseDto> findAll(int pageNumber,int pageSize);
 
     PostResponseDto getById(Long id);
 
