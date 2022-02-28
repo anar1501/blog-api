@@ -2,20 +2,19 @@ package com.company.blog.service.impl;
 
 import com.company.blog.config.AppConfiguration;
 import com.company.blog.data.dto.request.PostRequestDto;
+import com.company.blog.data.dto.response.PaginationInfoPostResponseDto;
 import com.company.blog.data.dto.response.PostResponseDto;
 import com.company.blog.data.entity.Post;
 import com.company.blog.data.repository.PostRepository;
 import com.company.blog.exception.ResourceNotFoundException;
+import com.company.blog.mapper.PostMapperUtility;
 import com.company.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.company.blog.mapper.EntityToDto.INSTANCE;
 
@@ -24,6 +23,14 @@ import static com.company.blog.mapper.EntityToDto.INSTANCE;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final AppConfiguration appConfiguration;
+    private final PostMapperUtility postMapperUtility;
+
+    @Override
+    public PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Post> postPage = postRepository.findAll(pageable);
+        return postMapperUtility.preparePaginationInfoPostResponseDto(pageNumber, pageSize, postPage);
+    }
 
     @Override
     public PostResponseDto createPost(PostRequestDto requestDto) {
@@ -31,10 +38,6 @@ public class PostServiceImpl implements PostService {
         return INSTANCE.toDto(savePost);
     }
 
-    @Override
-    public List<PostResponseDto> findAll(int pageNumber, int pageSize) {
-        return postRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent().stream().map(post -> appConfiguration.modelMapper().map(post, PostResponseDto.class)).collect(Collectors.toList());
-    }
 
     @Override
     public PostResponseDto getById(Long id) {
