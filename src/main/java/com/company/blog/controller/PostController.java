@@ -1,6 +1,7 @@
 package com.company.blog.controller;
 
 import com.company.blog.data.dto.request.PostRequestDto;
+import com.company.blog.data.dto.response.PaginationInfoPostResponseDto;
 import com.company.blog.data.dto.response.PostResponseDto;
 import com.company.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,15 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponseDto>> getAll
-    (
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
-    ) {
-        return ResponseEntity.ok(postService.findAll(pageNumber,pageSize));
-      }
+    public ResponseEntity<PaginationInfoPostResponseDto> getAll
+            (
+                    @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+                    @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
+
+            )
+    {
+        return ResponseEntity.ok(postService.getAll(pageNumber, pageSize));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponseDto> getById(@PathVariable("id") Long id) {
