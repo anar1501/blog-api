@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PostService {
 
-    PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize,String sortBy);
+    PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize,String sortBy,String sortType);
 
     PostResponseDto createPost(PostRequestDto requestDto);
 
