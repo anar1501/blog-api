@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -26,8 +27,8 @@ public class PostServiceImpl implements PostService {
     private final PostMapperUtility postMapperUtility;
 
     @Override
-    public PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize,String sortBy) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize,Sort.by(sortBy));
         Page<Post> postPage = postRepository.findAll(pageable);
         return postMapperUtility.preparePaginationInfoPostResponseDto(pageNumber, pageSize, postPage);
     }
