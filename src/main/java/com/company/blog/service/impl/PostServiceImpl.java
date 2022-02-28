@@ -43,4 +43,9 @@ public class PostServiceImpl implements PostService {
         appConfiguration.modelMapper().map(postRequestDto, post);
         return appConfiguration.modelMapper().map(postRepository.save(post), PostResponseDto.class);
     }
+
+    @Override
+    public void deleteById(Long id) {
+       postRepository.delete(postRepository.getById(id));
+    }
 }

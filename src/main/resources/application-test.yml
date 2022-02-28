@@ -5,10 +5,20 @@ blog:
     url: jdbc:postgresql://localhost:5432/ecourtprocessing
     driver: org.postgresql.Driver
   hibernate:
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
-      show-sql: true
-      format_sql: true
-      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    format_sql: true
+    ddl-auto: update
 
 server:
   port: 8080
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+
