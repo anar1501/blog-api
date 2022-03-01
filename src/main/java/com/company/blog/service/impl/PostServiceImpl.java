@@ -1,6 +1,6 @@
 package com.company.blog.service.impl;
 
-import com.company.blog.config.AppConfiguration;
+import com.company.blog.config.ModelMapperConfiguration;
 import com.company.blog.data.dto.request.PostRequestDto;
 import com.company.blog.data.dto.response.PaginationInfoPostResponseDto;
 import com.company.blog.data.dto.response.PostResponseDto;
@@ -25,8 +25,9 @@ import static com.company.blog.mapper.EntityToDto.INSTANCE;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    private final AppConfiguration appConfiguration;
     private final PostMapperUtility postMapperUtility;
+    private final ModelMapperConfiguration modelMapperConfiguration;
+
 
     @Override
     public PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize, String sortBy, String sortType) {
@@ -34,25 +35,25 @@ public class PostServiceImpl implements PostService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Post> postRepositoryAll = postRepository.findAll(pageable);
         List<Post> postList = postRepositoryAll.getContent();
-        return postMapperUtility.preparePaginationInfoPostResponseDto(postList,postRepositoryAll);
+        return postMapperUtility.preparePaginationInfoPostResponseDto(postList, postRepositoryAll);
     }
 
     @Override
     public PostResponseDto createPost(PostRequestDto requestDto) {
-        Post savePost = postRepository.save(appConfiguration.modelMapper().map(requestDto, Post.class));
+        Post savePost = postRepository.save(modelMapperConfiguration.map(requestDto, Post.class));
         return INSTANCE.toDto(savePost);
     }
 
     @Override
     public PostResponseDto getById(Long id) {
-        return appConfiguration.modelMapper().map(postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id)), PostResponseDto.class);
+        return modelMapperConfiguration.map(postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id)), PostResponseDto.class);
     }
 
     @Override
     public PostResponseDto updateById(Long id, PostRequestDto postRequestDto) {
         Post post = postRepository.getById(id);
-        appConfiguration.modelMapper().map(postRequestDto, post);
-        return appConfiguration.modelMapper().map(postRepository.save(post), PostResponseDto.class);
+        modelMapperConfiguration.map(postRequestDto, post);
+        return modelMapperConfiguration.map(postRepository.save(post), PostResponseDto.class);
     }
 
     @Override
