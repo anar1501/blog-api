@@ -18,9 +18,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostMapperUtility {
     private final AppConfiguration appConfiguration;
-    private final PostRepository postRepository;
 
-    public PaginationInfoPostResponseDto preparePaginationInfoPostResponseDto(Integer pageNumber, Integer pageSize, List<Post> postList, Page<Post>postPage) {
+    public PaginationInfoPostResponseDto preparePaginationInfoPostResponseDto(List<Post> postList, Page<Post> postPage) {
         PaginationInfoPostResponseDto returnValue = new PaginationInfoPostResponseDto();
         returnValue.setContent(postList.stream().map(post -> appConfiguration.modelMapper().map(post, PostResponseDto.class)).collect(Collectors.toList()));
         returnValue.setPageNumber(postPage.getNumber());

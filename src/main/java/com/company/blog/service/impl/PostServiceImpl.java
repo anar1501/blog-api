@@ -34,7 +34,7 @@ public class PostServiceImpl implements PostService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Post> postRepositoryAll = postRepository.findAll(pageable);
         List<Post> postList = postRepositoryAll.getContent();
-        return postMapperUtility.preparePaginationInfoPostResponseDto(pageNumber,pageSize,postList,postRepositoryAll);
+        return postMapperUtility.preparePaginationInfoPostResponseDto(postList,postRepositoryAll);
     }
 
     @Override
