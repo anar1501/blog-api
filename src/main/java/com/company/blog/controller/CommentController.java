@@ -6,10 +6,9 @@ import com.company.blog.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +17,12 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<CommentResponseDto> createComment(@PathVariable("postId") Long posId, CommentRequestDto commentRequestDto) {
-        return new ResponseEntity<>(commentService.createComment(posId, commentRequestDto), HttpStatus.CREATED);
+    public ResponseEntity<CommentResponseDto> createComment(@PathVariable("postId") Long postId, CommentRequestDto commentRequestDto) {
+        return new ResponseEntity<>(commentService.createComment(postId, commentRequestDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/posts/{postId}/comments")
+    public ResponseEntity<List<CommentResponseDto>> getAllByPostId(@PathVariable("postId") Long postId) {
+        return ResponseEntity.ok(commentService.getAllByPostId(postId));
     }
 }
