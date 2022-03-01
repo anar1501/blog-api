@@ -30,4 +30,9 @@ public class CommentController {
     public ResponseEntity<CommentResponseDto> getByPostAndCommentId(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId) throws Exception {
         return ResponseEntity.ok(commentService.getByPostAndCommentId(postId, commentId));
     }
+
+    @PutMapping("/posts/{postId}/comments/{commentId}")
+    public ResponseEntity<CommentResponseDto> updateComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @RequestBody CommentRequestDto requestDto) {
+        return ResponseEntity.ok(commentService.updateComment(postId, commentId, requestDto));
+    }
 }

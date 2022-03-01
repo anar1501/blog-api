@@ -11,4 +11,6 @@ public interface CommentService {
     List<CommentResponseDto> getAllByPostId(Long postId);
 
     CommentResponseDto getByPostAndCommentId(Long postId, Long commentId) throws Exception;
+
+    CommentResponseDto updateComment(Long postId, Long commentId, CommentRequestDto requestDto);
 }
