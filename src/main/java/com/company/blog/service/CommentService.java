@@ -9,4 +9,6 @@ public interface CommentService {
     CommentResponseDto createComment(Long postId, CommentRequestDto commentRequestDto);
 
     List<CommentResponseDto> getAllByPostId(Long postId);
+
+    CommentResponseDto getByPostAndCommentId(Long postId, Long commentId) throws Exception;
 }
