@@ -11,6 +11,7 @@ import com.company.blog.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,8 +39,18 @@ public class CommentServiceImpl implements CommentService {
         Post post = postRepository.getById(postId);
         Comment comment = commentRepository.getById(commentId);
         if (!comment.getPost().getId().equals(post.getId())) {
-            throw new Exception();
+            throw new EntityNotFoundException();
         }
         return ModelMapperConfiguration.map(comment, CommentResponseDto.class);
+    }
+
+    @Override
+    public CommentResponseDto updateComment(Long postId, Long commentId, CommentRequestDto requestDto) {
+        Post post = postRepository.getById(postId);
+        Comment comment = commentRepository.getById(commentId);
+        if (!comment.getPost().getId().equals(post.getId())) {
+            throw new EntityNotFoundException();
+        }
+        return ModelMapperConfiguration.map(commentRepository.save(ModelMapperConfiguration.map(requestDto, comment)), CommentResponseDto.class);
     }
 }
