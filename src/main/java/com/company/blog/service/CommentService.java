@@ -10,7 +10,9 @@ public interface CommentService {
 
     List<CommentResponseDto> getAllByPostId(Long postId);
 
-    CommentResponseDto getByPostAndCommentId(Long postId, Long commentId) throws Exception;
+    CommentResponseDto getByPostAndCommentId(Long postId, Long commentId);
 
     CommentResponseDto updateComment(Long postId, Long commentId, CommentRequestDto requestDto);
+
+    void deleteComment(Long postId, Long commentId);
 }
