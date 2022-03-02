@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -27,12 +26,18 @@ public class CommentController {
     }
 
     @GetMapping("/posts/{postId}/comments/{commentId}")
-    public ResponseEntity<CommentResponseDto> getByPostAndCommentId(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId) throws Exception {
+    public ResponseEntity<CommentResponseDto> getByPostAndCommentId(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId) {
         return ResponseEntity.ok(commentService.getByPostAndCommentId(postId, commentId));
     }
 
     @PutMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<CommentResponseDto> updateComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @RequestBody CommentRequestDto requestDto) {
         return ResponseEntity.ok(commentService.updateComment(postId, commentId, requestDto));
+    }
+
+    @DeleteMapping("/posts/{postId}/comments/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId) {
+        commentService.deleteComment(postId, commentId);
+        return new ResponseEntity<>("Comment deleted succesfully", HttpStatus.OK);
     }
 }

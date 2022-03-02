@@ -35,22 +35,28 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentResponseDto getByPostAndCommentId(Long postId, Long commentId) throws Exception {
-        Post post = postRepository.getById(postId);
-        Comment comment = commentRepository.getById(commentId);
-        if (!comment.getPost().getId().equals(post.getId())) {
-            throw new EntityNotFoundException();
-        }
+    public CommentResponseDto getByPostAndCommentId(Long postId, Long commentId) {
+        Comment comment = getComment(postId, commentId);
         return ModelMapperConfiguration.map(comment, CommentResponseDto.class);
     }
 
     @Override
     public CommentResponseDto updateComment(Long postId, Long commentId, CommentRequestDto requestDto) {
+        Comment comment = getComment(postId, commentId);
+        return ModelMapperConfiguration.map(commentRepository.save(ModelMapperConfiguration.map(requestDto, comment)), CommentResponseDto.class);
+    }
+
+    @Override
+    public void deleteComment(Long postId, Long commentId) {
+        commentRepository.delete(getComment(postId, commentId));
+    }
+
+    private Comment getComment(Long postId, Long commentId) {
         Post post = postRepository.getById(postId);
         Comment comment = commentRepository.getById(commentId);
         if (!comment.getPost().getId().equals(post.getId())) {
             throw new EntityNotFoundException();
         }
-        return ModelMapperConfiguration.map(commentRepository.save(ModelMapperConfiguration.map(requestDto, comment)), CommentResponseDto.class);
+        return comment;
     }
 }
