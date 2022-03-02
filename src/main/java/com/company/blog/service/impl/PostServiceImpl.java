@@ -2,8 +2,10 @@ package com.company.blog.service.impl;
 
 import com.company.blog.config.ModelMapperConfiguration;
 import com.company.blog.data.dto.request.PostRequestDto;
+import com.company.blog.data.dto.response.CommentResponseDto;
 import com.company.blog.data.dto.response.PaginationInfoPostResponseDto;
 import com.company.blog.data.dto.response.PostResponseDto;
+import com.company.blog.data.entity.Comment;
 import com.company.blog.data.entity.Post;
 import com.company.blog.data.repository.PostRepository;
 import com.company.blog.exception.ResourceNotFoundException;
@@ -17,7 +19,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.company.blog.mapper.EntityToDto.INSTANCE;
 
@@ -26,8 +31,6 @@ import static com.company.blog.mapper.EntityToDto.INSTANCE;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostMapperUtility postMapperUtility;
-    private final ModelMapperConfiguration modelMapperConfiguration;
-
 
     @Override
     public PaginationInfoPostResponseDto getAll(Integer pageNumber, Integer pageSize, String sortBy, String sortType) {
@@ -40,20 +43,21 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseDto createPost(PostRequestDto requestDto) {
-        Post savePost = postRepository.save(modelMapperConfiguration.map(requestDto, Post.class));
+        Post savePost = postRepository.save(ModelMapperConfiguration.map(requestDto, Post.class));
         return INSTANCE.toDto(savePost);
     }
 
+    @Transactional
     @Override
     public PostResponseDto getById(Long id) {
-        return modelMapperConfiguration.map(postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id)), PostResponseDto.class);
+        return ModelMapperConfiguration.map(postRepository.getById(id), PostResponseDto.class);
     }
 
     @Override
     public PostResponseDto updateById(Long id, PostRequestDto postRequestDto) {
         Post post = postRepository.getById(id);
-        modelMapperConfiguration.map(postRequestDto, post);
-        return modelMapperConfiguration.map(postRepository.save(post), PostResponseDto.class);
+        ModelMapperConfiguration.map(postRequestDto, post);
+        return ModelMapperConfiguration.map(postRepository.save(post), PostResponseDto.class);
     }
 
     @Override

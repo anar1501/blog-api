@@ -1,6 +1,7 @@
 package com.company.blog.data.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,6 +9,8 @@ import java.util.Set;
 
 @Data
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "comments"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

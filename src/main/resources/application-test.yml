@@ -20,5 +20,7 @@ logging:
         type:
           descriptor:
             sql: trace
-
+spring:
+  jpa:
+    open-in-view: false
 
