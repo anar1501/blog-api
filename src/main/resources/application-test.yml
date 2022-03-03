@@ -1,11 +1,11 @@
 blog:
   datasource:
-    username: postgres
+    username: root
     password: 12345
-    url: jdbc:postgresql://localhost:5432/ecourtprocessing
-    driver: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3306/blog_api
+    driver: com.mysql.cj.jdbc.Driver
   hibernate:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     format_sql: true
     ddl-auto: update
