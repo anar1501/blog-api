@@ -1,7 +1,8 @@
 package com.company.blog.enums;
 
 public enum ErrorCase {
-    NOT_FOUND("Such Comment not found`", 404);
+    NOT_FOUND("Such Comment not found`", 404),
+    USER_NOT_FOUND("User not found", 404);
 
     private String message;
     private int code;
