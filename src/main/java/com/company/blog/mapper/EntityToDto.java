@@ -8,6 +8,5 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface EntityToDto {
     EntityToDto INSTANCE = Mappers.getMapper(EntityToDto.class);
-
     PostResponseDto toDto(Post post);
 }

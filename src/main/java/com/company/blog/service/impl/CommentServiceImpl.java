@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
-    private final ModelMapperConfiguration modelMapperConfiguration;
 
     @Override
     public CommentResponseDto createComment(Long postId, CommentRequestDto commentRequestDto) {
