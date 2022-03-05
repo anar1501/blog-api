@@ -8,6 +8,7 @@ import com.company.blog.utils.ConstraintUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 public class PostController {
     private final PostService postService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<PostResponseDto> createPost(@Valid @RequestBody PostRequestDto postRequestDto) {
         return new ResponseEntity<>(postService.createPost(postRequestDto), HttpStatus.CREATED);
@@ -29,10 +31,9 @@ public class PostController {
                     @RequestParam(value = "pageNumber", defaultValue = ConstraintUtil.DEFAULT_PAGE_NUMBER, required = false) Integer pageNumber,
                     @RequestParam(value = "pageSize", defaultValue = ConstraintUtil.DEFAULT_PAGE_SIZE, required = false) Integer pageSize,
                     @RequestParam(value = "sortBy", defaultValue = ConstraintUtil.DEFAULT_SORT_VALUE, required = false) String sortBy,
-                    @RequestParam(value = "sortType",defaultValue = ConstraintUtil.DEFAULT_SORT_TYPE,required = false)String sortType
+                    @RequestParam(value = "sortType", defaultValue = ConstraintUtil.DEFAULT_SORT_TYPE, required = false) String sortType
 
-            )
-    {
+            ) {
         return ResponseEntity.ok(postService.getAll(pageNumber, pageSize, sortBy, sortType));
     }
 
@@ -41,11 +42,13 @@ public class PostController {
         return ResponseEntity.ok(postService.getById(id));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostResponseDto> updateById(@PathVariable("id") Long id, @Valid @RequestBody PostRequestDto postRequestDto) {
         return ResponseEntity.ok(postService.updateById(id, postRequestDto));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public HttpStatus deleteById(@PathVariable("id") Long id) {
         postService.deleteById(id);

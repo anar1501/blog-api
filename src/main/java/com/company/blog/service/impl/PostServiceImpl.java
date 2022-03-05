@@ -26,8 +26,11 @@ import java.util.stream.Collectors;
 
 import static com.company.blog.mapper.EntityToDto.INSTANCE;
 
+
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostMapperUtility postMapperUtility;
@@ -47,7 +50,6 @@ public class PostServiceImpl implements PostService {
         return INSTANCE.toDto(savePost);
     }
 
-    @Transactional
     @Override
     public PostResponseDto getById(Long id) {
         return ModelMapperConfiguration.map(postRepository.getById(id), PostResponseDto.class);

@@ -18,7 +18,7 @@ public class PostMapperUtility {
 
     public PaginationInfoPostResponseDto preparePaginationInfoPostResponseDto(List<Post> postList, Page<Post> postPage) {
         PaginationInfoPostResponseDto returnValue = new PaginationInfoPostResponseDto();
-        returnValue.setContent(postList.stream().map(post -> modelMapperConfiguration.map(post, PostResponseDto.class)).collect(Collectors.toList()));
+        returnValue.setContent(postList.stream().map(post -> ModelMapperConfiguration.map(post, PostResponseDto.class)).collect(Collectors.toList()));
         returnValue.setPageNumber(postPage.getNumber());
         returnValue.setPageSize(postPage.getSize());
         returnValue.setTotalElements(postPage.getTotalElements());
