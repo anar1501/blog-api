@@ -7,15 +7,12 @@ import com.company.blog.data.entity.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Configuration
 @RequiredArgsConstructor
 public class PostMapperUtility {
-    private final ModelMapperConfiguration modelMapperConfiguration;
-
     public PaginationInfoPostResponseDto preparePaginationInfoPostResponseDto(List<Post> postList, Page<Post> postPage) {
         PaginationInfoPostResponseDto returnValue = new PaginationInfoPostResponseDto();
         returnValue.setContent(postList.stream().map(post -> ModelMapperConfiguration.map(post, PostResponseDto.class)).collect(Collectors.toList()));
