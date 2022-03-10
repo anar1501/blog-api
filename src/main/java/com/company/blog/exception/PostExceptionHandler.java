@@ -34,7 +34,6 @@ public class PostExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> catchEntityNotFoundException(EntityNotFoundException entityNotFoundException) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(ErrorCase.NOT_FOUND.getCode());
         errorResponse.setMessage(ErrorCase.NOT_FOUND.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
@@ -55,21 +54,11 @@ public class PostExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGlobalException(Exception exception,
-                                                               WebRequest webRequest) {
+    public ResponseEntity<ErrorResponse> handleGlobalException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setCode(500);
         errorResponse.setMessage(exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(CustomUserNameNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(CustomUserNameNotFoundException usernameNotFoundException) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(404);
-        errorResponse.setMessage(usernameNotFoundException.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 }

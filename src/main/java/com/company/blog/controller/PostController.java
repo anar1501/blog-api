@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/v1/posts")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
