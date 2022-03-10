@@ -1,22 +1,20 @@
 package com.company.blog.enums;
 
 public enum ErrorCase {
-    NOT_FOUND("Such Comment not found`", 404),
-    USER_NOT_FOUND("User not found", 404),
-    SUCCESS_LOGIN("User successfully sign in",200);
+    NOT_FOUND("Such Comment not found`"),
+    USER_NOT_FOUND("User not found"),
+    SUCCESS_LOGIN("User successfully sign in"),
+    SUCCESSFULLY_REGISTER("User successfully registered"),
+    EMAIL_ALREADY_TAKEN("Such email already registered"),
+    USERNAME_ALREADY_TAKEN("Such username already registered");
     private String message;
-    private int code;
 
-    ErrorCase(String message, int code) {
+    ErrorCase(String message) {
         this.message = message;
-        this.code = code;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public int getCode() {
-        return code;
-    }
 }
