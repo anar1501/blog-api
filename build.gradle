@@ -38,6 +38,9 @@ dependencies {
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
     // security
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    // jwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
 
 
 

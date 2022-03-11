@@ -24,3 +24,8 @@ spring:
   jpa:
     open-in-view: false
 
+##jwt
+app:
+  jwt-secret: JWTSecretKey
+  jwt-expiration-milliseconds: 604800000
+
