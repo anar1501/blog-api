@@ -2,11 +2,9 @@ package com.company.blog.controller;
 
 import com.company.blog.data.dto.request.LoginRequestDto;
 import com.company.blog.data.dto.request.RegisterRequestDto;
-import com.company.blog.enums.ErrorCase;
+import com.company.blog.resource.JWTAuthResponse;
 import com.company.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +19,8 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/sign-in")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto) {
-       userService.login(loginRequestDto);
-        return new ResponseEntity<>(ErrorCase.SUCCESS_LOGIN.getMessage(), HttpStatus.OK);
+    public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginRequestDto loginRequestDto) {
+        return ResponseEntity.ok(userService.login(loginRequestDto));
     }
 
     @PostMapping("/sign-up")
