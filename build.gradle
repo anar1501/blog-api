@@ -12,6 +12,9 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 repositories {
@@ -40,11 +43,10 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     // jwt
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-
-
-
-
-
+    //log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    // send mail
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
 
 }
 

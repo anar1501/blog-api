@@ -8,5 +8,5 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface DtoToEntity {
     DtoToEntity INSTANCE = Mappers.getMapper(DtoToEntity.class);
-    Post toEntity(PostRequestDto postRequestDto);
+//    Post toEntity(PostRequestDto postRequestDto);
 }
