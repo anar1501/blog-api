@@ -5,6 +5,8 @@ import com.company.blog.data.dto.response.PaginationInfoPostResponseDto;
 import com.company.blog.data.dto.response.PostResponseDto;
 import com.company.blog.service.PostService;
 import com.company.blog.utils.ConstraintUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,19 +15,21 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Api(value = "CRUD Rest APIs for Post resources")
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
 
+    @ApiOperation(value = "Create Post REST API")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping
+    @PostMapping("/api/v1/posts")
     public ResponseEntity<PostResponseDto> createPost(@Valid @RequestBody PostRequestDto postRequestDto) {
         return new ResponseEntity<>(postService.createPost(postRequestDto), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @ApiOperation(value = "Get All Posts REST API")
+    @GetMapping("/api/v1/posts")
     public ResponseEntity<PaginationInfoPostResponseDto> getAll
             (
                     @RequestParam(value = "pageNumber", defaultValue = ConstraintUtil.DEFAULT_PAGE_NUMBER, required = false) Integer pageNumber,
@@ -37,19 +41,22 @@ public class PostController {
         return ResponseEntity.ok(postService.getAll(pageNumber, pageSize, sortBy, sortType));
     }
 
-    @GetMapping("/{id}")
+    @ApiOperation(value = "Get Post By Id REST API")
+    @GetMapping(value = "/api/v1/posts/{id}")
     public ResponseEntity<PostResponseDto> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(postService.getById(id));
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/{id}")
+    @ApiOperation(value = "Update Post By Id REST API")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/api/v1/posts/{id}")
     public ResponseEntity<PostResponseDto> updateById(@PathVariable("id") Long id, @Valid @RequestBody PostRequestDto postRequestDto) {
         return ResponseEntity.ok(postService.updateById(id, postRequestDto));
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete Post By Id REST API")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/api/v1/posts/{id}")
     public HttpStatus deleteById(@PathVariable("id") Long id) {
         postService.deleteById(id);
         return HttpStatus.OK;

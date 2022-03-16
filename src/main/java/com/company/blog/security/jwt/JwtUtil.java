@@ -1,4 +1,4 @@
-package com.company.blog.security;
+package com.company.blog.security.jwt;
 
 import io.jsonwebtoken.*;
 import org.apache.logging.log4j.LogManager;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider {
+public class JwtUtil {
 
-    private static final Logger LOG = LogManager.getLogger(JwtTokenProvider.class);
+    private static final Logger LOG = LogManager.getLogger(JwtUtil.class);
 
     @Value("${app.jwt-secret}")
     private String jwtSecretKey;

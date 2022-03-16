@@ -6,7 +6,8 @@ public enum ErrorCase {
     SUCCESS_LOGIN("User successfully sign in"),
     SUCCESSFULLY_REGISTER("User successfully registered"),
     EMAIL_ALREADY_TAKEN("Such email already registered"),
-    USERNAME_ALREADY_TAKEN("Such username already registered");
+    USERNAME_ALREADY_TAKEN("Such username already registered"),
+    USER_UNCONFIRMED("User unconfirmed!!");
     private String message;
 
     ErrorCase(String message) {

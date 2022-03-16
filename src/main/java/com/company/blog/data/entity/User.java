@@ -1,13 +1,15 @@
 package com.company.blog.data.entity;
 
-import com.company.blog.enums.UserStatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
+
+import static com.company.blog.enums.UserStatusEnum.UNCONFIRMED;
 
 @Data
 @Entity
@@ -23,15 +25,19 @@ public class User {
     private String password;
     @Column(unique = true)
     private String email;
+    private String activationCode;
+    private Date expiredDate;
+    @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
-    private UserStatus status=new UserStatus();
+    private UserStatus status = new UserStatus();
 
     @PrePersist
     public void persist() {
-        getStatus().setId(UserStatusEnum.PENDING.getStatusId());
+        getStatus().setId(UNCONFIRMED.getStatusId());
     }
 }

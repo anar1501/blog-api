@@ -19,13 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-public class PostExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> catchResourceNotFoundException(ResourceNotFoundException resourceNotFoundException) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(HttpStatus.NOT_FOUND.value());
         errorResponse.setMessage(resourceNotFoundException.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
@@ -53,12 +52,29 @@ public class PostExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGlobalException(Exception exception) {
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    public ResponseEntity<ErrorResponse> handleGlobalException(Exception exception) {
+//        ErrorResponse errorResponse = new ErrorResponse();
+//        errorResponse.setCode(500);
+//        errorResponse.setMessage(exception.getMessage());
+//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+
+    @ExceptionHandler(UnconfirmedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleUnconfirmedException(UnconfirmedException e) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(500);
-        errorResponse.setMessage(exception.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        errorResponse.setMessage(e.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleUnconfirmedException(UsernameNotFoundException e) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage(e.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 }

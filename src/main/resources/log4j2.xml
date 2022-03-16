@@ -2,12 +2,12 @@
 <Configuration status="warn">
 
     <Properties>
-        <Property name="basePath">ldap-log/logs/</Property>
+        <Property name="basePath">blog-log/logs/</Property>
     </Properties>
 
     <Appenders>
-        <RollingFile  name="fileLogger" fileName="${basePath}/ldap.log"
-                      filePattern="${basePath}/ldap-%d{MM-yyyy-dd}.log">
+        <RollingFile  name="fileLogger" fileName="${basePath}/blog.log"
+                      filePattern="${basePath}/blog-%d{MM-yyyy-dd}.log">
             <PatternLayout>
                 <pattern>%d{MM-yyyy-dd} [%-5level] %l - %msg%n</pattern>
             </PatternLayout>

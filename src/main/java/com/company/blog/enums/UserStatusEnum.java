@@ -2,7 +2,7 @@ package com.company.blog.enums;
 
 
 public enum UserStatusEnum {
-    PENDING(1L), ACTIVE(2L), LOCKED(3L), DELETE(4L);
+    UNCONFIRMED(1L), CONFIRMED(2L);
 
     private Long statusId;
 

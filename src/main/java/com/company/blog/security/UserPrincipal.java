@@ -4,16 +4,16 @@ import com.company.blog.data.entity.Role;
 import com.company.blog.data.entity.User;
 import com.company.blog.enums.UserStatusEnum;
 import lombok.Data;
+import org.omg.PortableInterceptor.ACTIVE;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.company.blog.enums.UserStatusEnum.ACTIVE;
-import static com.company.blog.enums.UserStatusEnum.LOCKED;
 
 public class UserPrincipal implements UserDetails {
 
@@ -45,7 +45,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return user.getStatus().getId() != LOCKED.getStatusId();
+        return true;
     }
 
     @Override
@@ -53,9 +53,10 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
+    //Todo:Deyisilecek bura
     @Override
     public boolean isEnabled() {
-        return user.getStatus().getId() == ACTIVE.getStatusId();
+        return true;
     }
 
     private Set<GrantedAuthority> mapToGrantedAuthority(Set<Role> roles) {

@@ -33,5 +33,7 @@ app:
 ##something
 my:
     message:
-        body: "Please confirm your registration url"
+        body: "Please confirm your registration url: "
         subject: "Registration Confirm Link"
+
+
